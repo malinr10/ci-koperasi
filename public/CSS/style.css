@@ -1,0 +1,49 @@
+.sampul {
+  width: 50px;
+}
+
+.table > tbody > tr > * {
+  vertical-align: middle;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+#sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background: #212529;
+  transition: all 0.3s;
+}
+
+#sidebar.collapsed {
+  margin-left: -250px;
+}
+
+#sidebar .nav-link {
+  color: #adb5bd;
+}
+
+#sidebar .nav-link:hover,
+#sidebar .nav-link.active {
+  background: #343a40;
+  color: #fff;
+}
+
+#content {
+  width: 100%;
+  transition: all 0.3s;
+}
+
+.navbar-custom {
+  background: #ffffff;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.sidebar-header {
+  padding: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background: #1a1e21;
+}
