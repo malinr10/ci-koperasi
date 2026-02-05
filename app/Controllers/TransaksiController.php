@@ -3,13 +3,16 @@
 namespace App\Controllers;
 
 use App\Models\TransaksiModel;
+use App\Models\KoperasiModel;
 
 class TransaksiController extends BaseController
 {
     protected $transaksiModel;
+    protected $koperasiModel;
 
     public function __construct() {
         $this->transaksiModel = new TransaksiModel();
+        $this->koperasiModel = new KoperasiModel();
     }
 
     public function index()
@@ -17,7 +20,8 @@ class TransaksiController extends BaseController
         $data = [
             'title'     => 'Riwayat Transaksi Kas',
             'transaksi' => $this->transaksiModel->orderBy('tanggal', 'DESC')->findAll(),
-            'auto_code' => $this->transaksiModel->generateCode() // Generate kode otomatis
+            'auto_code' => $this->transaksiModel->generateCode(),
+            'list_koperasi' => $this->koperasiModel->findAll()
         ];
         return view('transaksi/index', $data);
     }
@@ -25,12 +29,18 @@ class TransaksiController extends BaseController
     public function save()
     {
         // Validasi sederhana
-        if (!$this->validate(['nominal' => 'required', 'kategori' => 'required'])) {
-            return redirect()->back()->withInput();
-        }
+        $rules =[
+            'sumber'         => 'required',
+            'koperasi_id'    => 'required',
+            'jenis'          => 'required',
+            'kategori'       => 'required',
+            'nominal'        => 'required|numeric',
+            'tanggal'        => 'required|valid_date[Y-m-d]',
+        ];
+
 
         $this->transaksiModel->save([
-            'koperasi_id'    => 1, // Default ID Koperasi Anda
+            'koperasi_id'    => $this->request->getVar('koperasi_id'),
             'kode_transaksi' => $this->request->getVar('kode_transaksi'),
             'jenis'          => $this->request->getVar('jenis'),
             'kategori'       => $this->request->getVar('kategori'),
@@ -46,6 +56,6 @@ class TransaksiController extends BaseController
     public function delete($id)
     {
         $this->transaksiModel->delete($id);
-        return redirect()->to('/transaksi')->with('pesan', 'Data berhasil dihapus.');
+        return redirect()->to('/transaksi')->with('pesan', 'Transaksi Berhasil Dihapus!');
     }
 }

@@ -106,9 +106,18 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // 1. Logika Chart.js (Diubah ke Bar Chart agar mirip gambar referensi)
     const ctx = document.getElementById('omzetChart').getContext('2d');
+
     const chartDataDb = <?= json_encode($chartData) ?>;
+
+    // Cek apakah semua data 0
+    const isAllZero = chartDataDb.every(val => val === 0);
+
+    // Hitung nilai maksimum untuk scale Y
+    const maxDataValue = Math.max(...chartDataDb);
+
+    // Jika semua 0 → paksa max 1 juta
+    const yMax = isAllZero ? 1000000 : maxDataValue * 1.2;
 
     new Chart(ctx, {
         type: 'line',
@@ -117,8 +126,12 @@
             datasets: [{
                 label: 'Omzet',
                 data: chartDataDb,
-                backgroundColor: '#6f42c1',
-                borderColor: '#6f42c1', 
+                borderColor: '#6f42c1',
+                backgroundColor: 'rgba(111, 66, 193, 0.2)',
+                tension: 0.4,
+                fill: true,
+                pointRadius: 4,
+                pointBackgroundColor: '#6f42c1'
             }]
         },
         options: {
@@ -129,13 +142,6 @@
                     display: false
                 },
                 tooltip: {
-                    backgroundColor: '#fff',
-                    titleColor: '#000',
-                    bodyColor: '#000',
-                    borderColor: '#e3e6f0',
-                    borderWidth: 1,
-                    displayColors: false,
-                    padding: 10,
                     callbacks: {
                         label: function(context) {
                             return 'Rp ' + context.parsed.y.toLocaleString('id-ID');
@@ -146,31 +152,28 @@
             scales: {
                 y: {
                     beginAtZero: true,
-                    grid: {
-                        borderDash: [2],
-                        color: '#e3e6f0',
-                        drawBorder: false
-                    },
+                    min: 0,
+                    max: yMax,
                     ticks: {
-                        padding: 10,
                         callback: function(value) {
-                            return 'Rp ' + (value / 1000000) + ' Jt';
+                            if (value === 0) return 'Rp 0';
+                            return 'Rp ' + (value / 1000000).toFixed(1) + ' Jt';
                         }
+                    },
+                    grid: {
+                        color: '#e3e6f0'
                     }
                 },
                 x: {
                     grid: {
                         display: false
-                    },
-                    ticks: {
-                        maxRotation: 0,
-                        autoSkip: true
                     }
                 }
             }
         }
     });
 
+    // 2. Logika Google Maps (Tetap Sama)
     function initMap() {
         const locations = <?= json_encode($lokasiKoperasi) ?>;
         const center = locations.length > 0 ?
@@ -186,7 +189,7 @@
         const map = new google.maps.Map(document.getElementById("mapDashboard"), {
             zoom: 11,
             center: center,
-            disableDefaultUI: true,
+            disableDefaultUI: true, // Tampilan bersih seperti widget
             zoomControl: true
         });
 

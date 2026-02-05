@@ -15,6 +15,7 @@ class Anggota extends Migration
             'nik'            => ['type' => 'VARCHAR', 'constraint' => 20],
             'nama'           => ['type' => 'VARCHAR', 'constraint' => 150],
             'jenis_kelamin'  => ['type' => 'ENUM', 'constraint' => ['L', 'P']],
+            'email'         => ['type' => 'VARCHAR', 'constraint' => 100, 'null' => true],
             'alamat'         => ['type' => 'TEXT', 'null' => true],
             'no_hp'          => ['type' => 'VARCHAR', 'constraint' => 20, 'null' => true],
             'tanggal_lahir'  => ['type' => 'DATE', 'null' => true],

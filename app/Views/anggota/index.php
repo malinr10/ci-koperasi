@@ -8,7 +8,9 @@
     </div>
 
     <?php if (session()->getFlashdata('pesan')) : ?>
-        <div class="alert alert-success"><?= session()->getFlashdata('pesan'); ?></div>
+        <div class="alert alert-success alert-dismissible fade show border-0" role="alert"><?= session()->getFlashdata('pesan'); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     <?php endif; ?>
 
     <?php if (session()->getFlashdata('errors')) : ?>
@@ -194,7 +196,7 @@
                                                 </li>
                                                 <li class="list-group-item border-0 px-0">
                                                     <div class="ms-2">
-                                                        <div class="small text-muted">Status Akun</div>
+                                                        <div class="small text-muted">Status Anggota</div>
                                                         <span class="badge rounded-pill bg-<?= ($a['status'] == 'aktif') ? 'success' : 'danger' ?>">
                                                             <?= ucfirst($a['status']) ?>
                                                         </span>
@@ -233,31 +235,31 @@
                         <input type="hidden" name="koperasi_id" value="1">
                         <div class="mb-3">
                             <label>NIK</label>
-                            <input type="text" name="nik" class="form-control" required>
+                            <input type="text" name="nik" value="<?= old('nik') ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label>Nama Lengkap</label>
-                            <input type="text" name="nama" class="form-control" required>
+                            <input type="text" name="nama" value="<?= old('nama') ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label>Alamat</label>
-                            <input type="text" name="alamat" class="form-control" required>
+                            <input type="text" name="alamat" value="<?= old('alamat') ?>" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label>Tanggal Lahir</label>
-                            <input type="date" name="tanggal_lahir" class="form-control" required>
+                            <input type="date" name="tanggal_lahir" value="<?= old('tanggal_lahir') ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label>No HP</label>
-                            <input type="text" name="no_hp" class="form-control" required>
+                            <input type="text" name="no_hp" value="<?= old('no_hp') ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label>Jenis Kelamin</label>
                             <select name="jenis_kelamin" class="form-select">
-                                <option value="L">Laki-laki</option>
-                                <option value="P">Perempuan</option>
+                                <option value="L" <?= old('jenis_kelamin') == 'L' ? 'selected' : '' ?>>Laki-laki</option>
+                                <option value="P" <?= old('jenis_kelamin') == 'P' ? 'selected' : '' ?>>Perempuan</option>
                             </select>
                         </div>
                     </div>
@@ -265,7 +267,7 @@
                         <label for="nama_koperasi">Nama Koperasi</label>
                         <select name="koperasi_id" class="form-select">
                             <?php foreach ($list_koperasi as $k) : ?>
-                                <option value="<?= $k['id'] ?>"><?= $k['nama'] ?> - <?= $k['kota'] ?></option>
+                                <option value="<?= $k['id'] ?>" <?= old('koperasi_id') == $k['id'] ? 'selected' : '' ?>><?= $k['nama'] ?> - <?= $k['kota'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

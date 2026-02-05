@@ -27,10 +27,10 @@ class AnggotaController extends BaseController
     {
         $rules = [
             'koperasi_id'   => 'required',
-            'nik'           => 'required|numeric|exact_length[16]|is_unique[anggota.nik]',
+            'nik'           => 'required|numeric|min_length[10]|is_unique[anggota.nik]',
             'nama'          => 'required|min_length[3]',
             'jenis_kelamin' => 'required|in_list[L,P]',
-            'no_hp'         => 'required|numeric|min_length[12]',
+            'no_hp'         => 'required|numeric|min_length[11]',
             'alamat'        => 'required',
             'tanggal_lahir' => 'required|valid_date[Y-m-d]'
         ];
@@ -61,7 +61,8 @@ class AnggotaController extends BaseController
     {   
         $rules = [
             'nama'   => 'required|min_length[3]',
-            'no_hp'  => 'required|numeric|min_length[12]',
+            'no_hp'  => 'required|numeric|min_length[11]',
+            'nik'    => 'required|numeric|min_length[10]|is_unique[anggota.nik,id,' . $id . ']',
             'status' => 'required|in_list[aktif,nonaktif]',
             'jenis_kelamin' => 'required|in_list[L,P]',
             'alamat'        => 'required',
@@ -76,6 +77,7 @@ class AnggotaController extends BaseController
             'koperasi_id' => $this->request->getVar('koperasi_id'),
             'nama'   => $this->request->getVar('nama'),
             'no_hp'  => $this->request->getVar('no_hp'),
+            'nik'    => $this->request->getVar('nik'),
             'status' => $this->request->getVar('status'),
             'jenis_kelamin' => $this->request->getVar('jenis_kelamin'),
             'alamat' => $this->request->getVar('alamat'),

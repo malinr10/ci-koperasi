@@ -9,17 +9,19 @@
     </div>
 
     <?php if (session()->getFlashdata('pesan')) : ?>
-        <div class="alert alert-success shadow-sm border-0"><?= session()->getFlashdata('pesan'); ?></div>
+        <div class="alert alert-success alert-dismissible fade show border-0" role="alert"><?= session()->getFlashdata('pesan'); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     <?php endif; ?>
 
-    <div  class="card border-0 shadow-sm p-3">
+    <div class="card border-0 shadow-sm p-3">
         <div class="table-responsive">
             <table id="tableTransaksi" class="table table-hover align-middle">
                 <thead class="table-light">
                     <tr>
                         <th>Kode</th>
                         <th>Tanggal</th>
-                        <th>Sumber / Nama</th>
+                        <th>Sumber</th>
                         <th>Kategori</th>
                         <th>Jenis</th>
                         <th>Nominal</th>
@@ -28,29 +30,29 @@
                 </thead>
                 <tbody>
                     <?php foreach ($transaksi as $t) : ?>
-                    <tr>
-                        <td class="small fw-bold"><?= $t['kode_transaksi'] ?></td>
-                        <td><?= date('d M Y', strtotime($t['tanggal'])) ?></td>
-                        <td><?= $t['sumber'] ?></td>
-                        <td><span class="badge bg-light text-dark border"><?= $t['kategori'] ?></span></td>
-                        <td>
-                            <?php if ($t['jenis'] == 'pemasukan') : ?>
-                                <span class="badge bg-success-subtle text-success">Masuk</span>
-                            <?php else : ?>
-                                <span class="badge bg-danger-subtle text-danger">Keluar</span>
-                            <?php endif; ?>
-                        </td>
-                        <td class="fw-bold">Rp <?= number_format($t['nominal'], 0, ',', '.') ?></td>
-                        <td class="text-center">
-                            <form action="/transaksi/delete/<?= $t['id'] ?>" method="post" class="d-inline">
-                                <?= csrf_field() ?>
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit" class="btn btn-sm text-danger" onclick="return confirm('Hapus transaksi ini?')">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td class="small fw-bold"><?= $t['kode_transaksi'] ?></td>
+                            <td><?= date('d M Y', strtotime($t['tanggal'])) ?></td>
+                            <td><?= $t['sumber'] ?></td>
+                            <td><span class="badge bg-light text-dark border"><?= $t['kategori'] ?></span></td>
+                            <td>
+                                <?php if ($t['jenis'] == 'pemasukan') : ?>
+                                    <span class="badge bg-success-subtle text-success">Masuk</span>
+                                <?php else : ?>
+                                    <span class="badge bg-danger-subtle text-danger">Keluar</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="fw-bold">Rp <?= number_format($t['nominal'], 0, ',', '.') ?></td>
+                            <td class="text-center">
+                                <form action="/transaksi/delete/<?= $t['id'] ?>" method="post" class="d-inline">
+                                    <?= csrf_field() ?>
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-danger btn-sm text-light" onclick="return confirm('Hapus transaksi ini?')">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -74,8 +76,12 @@
                             <input type="text" name="kode_transaksi" class="form-control bg-light" value="<?= $auto_code ?>" readonly>
                         </div>
                         <div class="col-md-6">
-                            <label class="fw-bold small mb-1">SUMBER / ANGGOTA</label>
-                            <input type="text" name="sumber" class="form-control" placeholder="Contoh: Budi Sudarsono / Kas Kantor" required>
+                            <label class="fw-bold small mb-1">SUMBER</label>
+                            <select name="sumber" class="form-select" required>
+                                <option value="transfer">Transfer</option>
+                                <option value="cash">Cash</option>
+                                <option value="lainnya">Lainnya</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">

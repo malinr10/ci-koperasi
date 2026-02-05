@@ -7,6 +7,8 @@
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">Tambah Koperasi</button>
     </div>
 
+    
+
     <div class="card shadow-sm p-3">
         <table id="tableKoperasi" class="table table-hover">
             <thead>
