@@ -1,155 +1,216 @@
 <?= $this->extend('layout/template') ?>
 <?= $this->section('content') ?>
 
-<style>
-    .stat-card {
-        border: none;
-        border-radius: 15px;
-        color: white;
-        transition: 0.3s;
-    }
+<div class="container-fluid px-4 mt-4">
 
-    .stat-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .gradient-blue {
-        background: linear-gradient(135deg, #4e73df, #224abe);
-    }
-
-    .gradient-green {
-        background: linear-gradient(135deg, #1cc88a, #13855c);
-    }
-
-    .gradient-orange {
-        background: linear-gradient(135deg, #f6c23e, #dda20a);
-    }
-</style>
-
-<div class="container-fluid">
-
-    <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h3 class="fw-bold mb-0">Dashboard Koperasi</h3>
-            <small class="text-muted">Overview statistik dan performa</small>
+            <h2 class="fw-bold text-dark mb-1">Dashboard</h2>
+            <p class="text-gray-500 mb-0">Overview statistik & ringkasan koperasi</p>
         </div>
-        <span class="badge bg-primary p-2">Tahun 2026</span>
+
+        <div class="d-flex gap-2">
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    2026
+                </a>
+
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item" href="#">2025</a></li>
+                    <li><a class="dropdown-item" href="#">2024</a></li>
+                    <li><a class="dropdown-item" href="#">2023</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 
-    <!-- STAT CARDS -->
     <div class="row g-4 mb-4">
-
         <div class="col-md-4">
-            <div class="card stat-card gradient-blue shadow">
-                <div class="card-body">
-                    <h6>Total Anggota</h6>
-                    <h2 class="fw-bold">245</h2>
-                    <small>+12% dari bulan lalu</small>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card stat-card gradient-green shadow">
-                <div class="card-body">
-                    <h6>Total Transaksi</h6>
-                    <h2 class="fw-bold">1.240</h2>
-                    <small>+8% dari bulan lalu</small>
+            <div class="card card-material border-top-purple h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-uppercase fw-bold text-muted small mb-1">Total Anggota</div>
+                        <div class="h3 fw-bold mb-0 text-dark"><?= number_format($totalAnggota, 0, ',', '.') ?></div>
+                        <div class="small text-success mt-1"><i class="bi bi-arrow-up"></i> Aktif</div>
+                    </div>
+                    <div class="icon-circle bg-purple-soft">
+                        <i class="fa-solid fa-people-group"></i>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card stat-card gradient-orange shadow">
-                <div class="card-body">
-                    <h6>Total Omzet</h6>
-                    <h2 class="fw-bold">Rp 125 JT</h2>
-                    <small>-3% dari bulan lalu</small>
+            <div class="card card-material border-top-warning h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-uppercase fw-bold text-muted small mb-1">Total Transaksi</div>
+                        <div class="h3 fw-bold mb-0 text-dark"><?= number_format($totalTransaksi, 0, ',', '.') ?></div>
+                        <div class="small text-muted mt-1">Record kas</div>
+                    </div>
+                    <div class="icon-circle bg-warning-soft">
+                        <i class="fa-solid fa-money-bill"></i>
+                    </div>
                 </div>
             </div>
         </div>
 
-    </div>
-
-    <!-- CHART CARD -->
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card shadow border-0 rounded-4">
-                <div class="card-body p-4">
-                    <h5 class="mb-4 fw-bold">Trend Omzet 2026</h5>
-                    <canvas id="omzetChart" height="100"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="card shadow border-0 rounded-4">
-                <div class="card-body p-4">
-                    <h5 class="mb-4 fw-bold">Lokasi Cabang Koperasi</h5>
-                    <canvas id="omzetChart" height="100"></canvas>
+        <div class="col-md-4">
+            <div class="card card-material border-top-teal h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-uppercase fw-bold text-muted small mb-1">Total Omzet</div>
+                        <div class="h3 fw-bold mb-0 text-dark">Rp <?= number_format($totalOmzet, 0, ',', '.') ?></div>
+                        <div class="small text-success mt-1"><i class="bi bi-graph-up"></i> Profit</div>
+                    </div>
+                    <div class="icon-circle bg-teal-soft">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="row g-4">
+        <div class="col-xl-6">
+            <div class="card card-material h-100">
+                <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 d-flex justify-content-between">
+                    <h5 class="fw-bold text-dark mb-0">Trend Omzet Bulanan</h5>
+                </div>
+                <div class="card-body">
+                    <div style="height: 350px; width: 100%;">
+                        <canvas id="omzetChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-
+        <div class="col-xl-6">
+            <div class="card card-material h-100">
+                <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 d-flex justify-content-between">
+                    <h5 class="fw-bold text-dark mb-0">Lokasi Cabang</h5>
+                    <div class="dropdown no-caret">
+                        <button class="btn btn-transparent btn-sm text-muted" type="button"><i class="bi bi-three-dots-vertical"></i></button>
+                    </div>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <div id="mapDashboard" class="flex-grow-1"></div>
+                    <div class="mt-3 small text-muted text-center">
+                        <i class="bi bi-info-circle me-1"></i> Data lokasi diambil dari database
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    // 1. Logika Chart.js (Diubah ke Bar Chart agar mirip gambar referensi)
     const ctx = document.getElementById('omzetChart').getContext('2d');
-
-    // Gradient fill
-    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(78, 115, 223, 0.5)');
-    gradient.addColorStop(1, 'rgba(78, 115, 223, 0.05)');
+    const chartDataDb = <?= json_encode($chartData) ?>;
 
     new Chart(ctx, {
         type: 'line',
         data: {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
             datasets: [{
-                label: 'Omzet (Juta)',
-                data: [12, 19, 15, 25, 22, 30, 35, 40, 38, 45, 50, 55],
-                borderColor: '#4e73df',
-                backgroundColor: gradient,
-                fill: true,
-                tension: 0.4,
-                pointBackgroundColor: '#fff',
-                pointBorderColor: '#4e73df',
-                pointRadius: 5
+                label: 'Omzet',
+                data: chartDataDb,
+                backgroundColor: '#6f42c1',
+                borderColor: '#6f42c1', 
             }]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: {
                     display: false
                 },
                 tooltip: {
-                    backgroundColor: '#1f2937',
-                    titleColor: '#fff',
-                    bodyColor: '#fff',
+                    backgroundColor: '#fff',
+                    titleColor: '#000',
+                    bodyColor: '#000',
+                    borderColor: '#e3e6f0',
+                    borderWidth: 1,
+                    displayColors: false,
                     padding: 10,
-                    cornerRadius: 8
+                    callbacks: {
+                        label: function(context) {
+                            return 'Rp ' + context.parsed.y.toLocaleString('id-ID');
+                        }
+                    }
                 }
             },
             scales: {
                 y: {
                     beginAtZero: true,
                     grid: {
-                        color: 'rgba(0,0,0,0.05)'
+                        borderDash: [2],
+                        color: '#e3e6f0',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        padding: 10,
+                        callback: function(value) {
+                            return 'Rp ' + (value / 1000000) + ' Jt';
+                        }
                     }
                 },
                 x: {
                     grid: {
                         display: false
+                    },
+                    ticks: {
+                        maxRotation: 0,
+                        autoSkip: true
                     }
                 }
             }
         }
     });
+
+    function initMap() {
+        const locations = <?= json_encode($lokasiKoperasi) ?>;
+        const center = locations.length > 0 ?
+            {
+                lat: parseFloat(locations[0].latitude),
+                lng: parseFloat(locations[0].longitude)
+            } :
+            {
+                lat: -6.9175,
+                lng: 107.6191
+            };
+
+        const map = new google.maps.Map(document.getElementById("mapDashboard"), {
+            zoom: 11,
+            center: center,
+            disableDefaultUI: true,
+            zoomControl: true
+        });
+
+        const infoWindow = new google.maps.InfoWindow();
+
+        locations.forEach(loc => {
+            const marker = new google.maps.Marker({
+                position: {
+                    lat: parseFloat(loc.latitude),
+                    lng: parseFloat(loc.longitude)
+                },
+                map: map,
+                title: loc.nama,
+                animation: google.maps.Animation.DROP
+            });
+
+            marker.addListener("click", () => {
+                infoWindow.setContent(`<strong>${loc.nama}</strong><br>${loc.alamat}`);
+                infoWindow.open(map, marker);
+            });
+        });
+    }
 </script>
 
-<?= $this->endSection('content') ?>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?= $google_maps_key ?>&callback=initMap" async defer></script>
+
+<?= $this->endSection() ?>

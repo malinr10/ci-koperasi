@@ -1,3 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+body {
+  font-family: "Roboto", "Open Sans", sans-serif;
+  background-color: #f9f9f9;
+  overflow-x: hidden;
+}
 .sampul {
   width: 50px;
 }
@@ -6,44 +13,144 @@
   vertical-align: middle;
 }
 
-body {
-  overflow-x: hidden;
+/* Layout Wrapper */
+#wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
 }
 
-#sidebar {
-  width: 250px;
+/* Sidebar Style */
+#sidebar-wrapper {
+  min-width: 250px;
+  max-width: 250px;
+  background-color: #fff;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.15);
   min-height: 100vh;
-  background: #212529;
-  transition: all 0.3s;
+  transition: margin 0.25s ease-out;
+  z-index: 1000;
 }
 
-#sidebar.collapsed {
+#sidebar-wrapper .sidebar-heading {
+  padding: 1.5rem 1.25rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #4e73df;
+  /* Warna Utama */
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+#sidebar-wrapper .list-group-item {
+  border: none;
+  padding: 12px 25px;
+  font-weight: 600;
+  color: #a0aec0;
+  /* Warna teks menu mati */
+  transition: all 0.2s;
+}
+
+#sidebar-wrapper .list-group-item:hover {
+  color: #4e73df;
+  background-color: #f8f9fa;
+  border-left: 4px solid #4e73df;
+}
+
+#sidebar-wrapper .list-group-item.active {
+  color: #4e73df;
+  background-color: #f0f4ff;
+  border-left: 4px solid #4e73df;
+}
+
+#sidebar-wrapper .list-group-item i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Page Content */
+#page-content-wrapper {
+  width: 100%;
+}
+
+/* Navbar Style */
+.navbar-custom {
+  background-color: #fff;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.05);
+  padding: 10px 20px;
+}
+
+/* Toggled State (Untuk menutup sidebar) */
+#wrapper.toggled #sidebar-wrapper {
   margin-left: -250px;
 }
 
-#sidebar .nav-link {
-  color: #adb5bd;
+@media (max-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: -250px;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+  }
 }
 
-#sidebar .nav-link:hover,
-#sidebar .nav-link.active {
-  background: #343a40;
-  color: #fff;
+.card-material {
+  background-color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.15);
+  transition: transform 0.2s ease-in-out;
 }
 
-#content {
+.card-material:hover {
+  transform: translateY(-3px);
+}
+
+/* 2. Top Border Accents */
+.border-top-purple {
+  border-top: 4px solid #6f42c1;
+}
+.border-top-warning {
+  border-top: 4px solid #f4a100;
+}
+.border-top-teal {
+  border-top: 4px solid #00ac69;
+}
+
+/* 3. Icon Circle Wrapper */
+.icon-circle {
+  height: 3.5rem;
+  width: 3.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+/* Warna background icon pudar */
+.bg-purple-soft {
+  background-color: rgba(111, 66, 193, 0.1);
+  color: #6f42c1;
+}
+.bg-warning-soft {
+  background-color: rgba(244, 161, 0, 0.1);
+  color: #f4a100;
+}
+.bg-teal-soft {
+  background-color: rgba(0, 172, 105, 0.1);
+  color: #00ac69;
+}
+
+/* 4. Map Container */
+#mapDashboard {
+  height: 320px;
   width: 100%;
-  transition: all 0.3s;
+  border-radius: 8px;
 }
 
-.navbar-custom {
-  background: #ffffff;
-  border-bottom: 1px solid #dee2e6;
-}
-
-.sidebar-header {
-  padding: 1rem;
-  font-weight: bold;
-  color: #fff;
-  background: #1a1e21;
+.text-gray-500 {
+  color: #a0aec0;
 }
