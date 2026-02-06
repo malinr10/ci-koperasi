@@ -13,8 +13,6 @@ class Koperasi extends Migration
             'kode'        => ['type' => 'VARCHAR', 'constraint' => 20, 'unique' => true],
             'nama'        => ['type' => 'VARCHAR', 'constraint' => 150],
             'alamat'      => ['type' => 'TEXT'],
-            'kota'        => ['type' => 'VARCHAR', 'constraint' => 100],
-            'provinsi'    => ['type' => 'VARCHAR', 'constraint' => 100],
             'latitude'    => ['type' => 'DECIMAL', 'constraint' => '10,8'],
             'longitude'   => ['type' => 'DECIMAL', 'constraint' => '11,8'],
             'no_telepon'  => ['type' => 'VARCHAR', 'constraint' => 20, 'null' => true],

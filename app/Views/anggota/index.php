@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">Data Anggota Koperasi</h2>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">Tambah Koperasi</button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah"> <i class="fa-solid fa-plus me-1"></i>  Tambah Anggota Koperasi</button>
     </div>
 
     <?php if (session()->getFlashdata('pesan')) : ?>
@@ -30,7 +30,8 @@
                 <tr>
                     <th>#</th>
                     <th>Nama Anggota</th>
-                    <th>Alamat</th>
+                    <th>NIK</th>
+                    <th>Jenis Kelamin</th>
                     <th>No HP</th>
                     <th>Aksi</th>
                 </tr>
@@ -41,7 +42,8 @@
                     <tr>
                         <th><?= $i++ ?></th>
                         <td><?= $a['nama'] ?></td>
-                        <td><?= $a['alamat'] ?></td>
+                        <td><?= $a['nik'] ?></td>
+                        <td><?= ($a['jenis_kelamin'] == 'L') ? 'Laki-laki' : 'Perempuan' ?></td>
                         <td><?= $a['no_hp'] ?></td>
                         <td class="d-flex gap-1">
                             <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $a['id'] ?>"><i class="fa-solid fa-pen-to-square" style="color: white;"></i></button>
@@ -103,7 +105,7 @@
                                             <label class="form-label">Pilih Koperasi Induk</label>
                                             <select name="koperasi_id" class="form-select">
                                                 <?php foreach ($list_koperasi as $k) : ?>
-                                                    <option value="<?= $k['id'] ?>" <?= ($a['koperasi_id'] == $k['id']) ? 'selected' : '' ?>><?= $k['nama'] ?> - <?= $k['kota'] ?></option>
+                                                    <option value="<?= $k['id'] ?>" <?= ($a['koperasi_id'] == $k['id']) ? 'selected' : '' ?>><?= $k['nama'] ?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </dic>
@@ -227,7 +229,7 @@
             <form action="/anggota/save" method="post">
                 <?= csrf_field() ?>
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Anggota</h5>
+                    <h5 class="modal-title">Tambah Anggota Koperasi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body row">
@@ -267,7 +269,7 @@
                         <label for="nama_koperasi">Nama Koperasi</label>
                         <select name="koperasi_id" class="form-select">
                             <?php foreach ($list_koperasi as $k) : ?>
-                                <option value="<?= $k['id'] ?>" <?= old('koperasi_id') == $k['id'] ? 'selected' : '' ?>><?= $k['nama'] ?> - <?= $k['kota'] ?></option>
+                                <option value="<?= $k['id'] ?>" <?= old('koperasi_id') == $k['id'] ? 'selected' : '' ?>><?= $k['nama'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

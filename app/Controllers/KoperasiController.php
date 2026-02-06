@@ -36,8 +36,12 @@ class KoperasiController extends BaseController
         $this->koperasiModel->save([
             'nama' => $this->request->getVar('nama'),
             'alamat' => $this->request->getVar('alamat'),
+            'email' => $this->request->getVar('email'),
+            'no_telepon' => $this->request->getVar('no_telepon'),
             'latitude' => $this->request->getVar('latitude'),
             'longitude' => $this->request->getVar('longitude'),
+            'kode' => $this->koperasiModel->generateCode(),
+            'status' => 'aktif'
         ]);
 
         return redirect()->to('/koperasi')->with('pesan', 'Data Koperasi Berhasil Ditambahkan');
@@ -55,14 +59,17 @@ class KoperasiController extends BaseController
         }
 
         $this->koperasiModel->update($id, [
-            'nama' => $this->request->getVar('nama'),
-            'alamat' => $this->request->getVar('alamat'),
-            'latitude' => $this->request->getVar('latitude'),
-            'longitude' => $this->request->getVar('longitude'),
+            'nama'        => $this->request->getVar('nama'),
+            'email'       => $this->request->getVar('email'),
+            'no_telepon'  => $this->request->getVar('no_telepon'),
+            'alamat'      => $this->request->getVar('alamat'),
+            'latitude'    => $this->request->getVar('latitude'),
+            'longitude'   => $this->request->getVar('longitude'),
         ]);
 
         return redirect()->to('/koperasi')->with('pesan', 'Data Koperasi Berhasil Diperbarui');
     }
+
 
     public function delete($id)
     {
